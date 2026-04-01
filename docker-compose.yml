@@ -1,0 +1,36 @@
+# docker-compose.yml
+
+# version of the docker compose syntax
+version: "3.9"
+
+services:
+  # ── PostgreSQL Container ───────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine # alpine = lightweight version of the image
+    container_name: auth_postgres
+
+    # Environment variables INSIDE the container
+    # PostgreSQL uses these to set up the database on first run
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: auth_db
+
+    # Host 5433: many Windows setups already run PostgreSQL on 5432; use 5433
+    # so DATABASE_URL uses localhost:5433 and hits this container, not local PG.
+    ports:
+      - "5433:5432"
+
+    # Volumes = persistent storage
+    # Without this, every time you restart the container, ALL data is lost
+    # This maps a named volume to where postgres stores its data inside the container
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    # Restart policy — if postgres crashes, docker will restart it automatically
+    restart: unless-stopped
+
+# Define the named volume at the top level
+# Docker manages where this actually lives on your machine
+volumes:
+  postgres_data:
