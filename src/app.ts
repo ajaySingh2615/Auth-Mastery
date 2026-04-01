@@ -1,5 +1,6 @@
 import express, { Application } from "express";
 import cookieParser from "cookie-parser";
+import { errorMiddleware } from "@common/middleware/error.middleware";
 
 const app: Application = express();
 
@@ -12,5 +13,6 @@ app.use(cookieParser()); // parse cookies attached to the request object
 // ── Routes
 
 // ── Global Error Handler
+app.use(errorMiddleware);
 
 export default app;
