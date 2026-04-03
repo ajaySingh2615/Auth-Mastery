@@ -8,6 +8,13 @@
       "when": 1775222617723,
       "tag": "0000_giant_wonder_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1775226820477,
+      "tag": "0001_omniscient_skreet",
+      "breakpoints": true
     }
   ]
 }

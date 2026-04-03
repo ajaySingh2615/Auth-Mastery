@@ -15,24 +15,29 @@ export const userRoleEnum = pgEnum("user_role", [
   "admin",
 ]);
 
+export const authProviderEnum = pgEnum("authProvider", [
+  "local",
+  "google",
+  "Phone",
+]);
+
 // Define the users table
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
-  password: text("password").notNull(),
+  password: text("password"),
   role: userRoleEnum("role").notNull().default("customer"),
   isVerified: boolean("is_verified").notNull().default(false),
   verificationToken: text("verification_token"),
   refreshToken: text("refresh_token"),
   resetPasswordToken: text("reset_password_token"),
   resetPasswordExpires: timestamp("reset_password_expires"),
-  createdAt: timestamp("created_at")
-    .notNull()
-    .default(sql`now()`),
-  updatedAt: timestamp("updated_at")
-    .notNull()
-    .default(sql`now()`),
+  authProvider: authProviderEnum("auth_provider").notNull().default("local"),
+  createdAt: timestamp("created_at").notNull().default(sql`now
+        ()`),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now
+        ()`),
 });
 
 export const User = typeof users.$inferSelect;
