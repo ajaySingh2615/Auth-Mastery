@@ -11,7 +11,7 @@ export class ApiError extends Error {
   }
 
   // ── Static Factory Methods
-  static BadRequest(message = "Bad Request") {
+  static badRequest(message = "Bad Request") {
     return new ApiError(400, message);
   }
 
